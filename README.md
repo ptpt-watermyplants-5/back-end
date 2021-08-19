@@ -1,7 +1,7 @@
 # back-end
 ## endpoints for login & register
-- /api/auth/register
-- /api/auth/login
+- /auth/register
+- /auth/login
 
 required fields
 {
