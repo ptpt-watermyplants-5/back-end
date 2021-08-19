@@ -2,8 +2,8 @@
 ## endpoints for login & register
 - /api/auth/register
 - /api/auth/login
-- •required fields
+required fields
 {
-    "username":'',
-    "password":'',
+    "username": "",
+    "password": "",
 };
