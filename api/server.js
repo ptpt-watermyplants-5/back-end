@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const { restricted } = require('./middlewares/auth-middleware');
 const authRouter = require('./auth/auth-router');
+const userRouter = require('./user/user-router');
 
 const server = express();
 
@@ -10,6 +12,7 @@ server.use(cors());
 server.use(helmet());
 
 server.use('/auth', authRouter);
+server.use('/user', restricted, userRouter);
 
 server.get('/', (req, res) => {
     res.json({ api: 'up' });
