@@ -11,8 +11,8 @@ required fields
 };
 
 ## endpoints for user
--[GET] /user/:id
--[GET] /user/:id/plants
--[PUT] /user/:id
--[POST] /user/:id/plants
--[DELETE] /user/:id/plants/:id
+- [GET] /user/:id
+- [GET] /user/:id/plants
+- [PUT] /user/:id
+- [POST] /user/:id/plants
+- [DELETE] /user/:id/plants/:id
