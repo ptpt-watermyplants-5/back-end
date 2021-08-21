@@ -31,7 +31,7 @@ router.put('/:id', verifyUser, updatePasswordHash, (req, res, next) => {
 
 router.get('/:id/plants', verifyUser, (req, res, next) => {
     const { id } = req.params;
-console.log(id)
+
     User.getUserPlants(id)
     .then(user => {
         res.json(user)
