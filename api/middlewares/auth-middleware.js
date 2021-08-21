@@ -67,7 +67,7 @@ async function validUsername(req, res, next) {
     const verifiedUser = await User.findById(id);
 
     if (Boolean(verifiedUser) === false) {
-      return next({ status: 404, message: `not found user id ${id}`})
+      return next({ status: 404, message: `there is no user with id ${id}`})
     }else if (username !== verifiedUser.username) {
       return next({ status: 401, message: 'invalid authorization' })
     }
