@@ -7,11 +7,7 @@ router.get('/:id', verifyUser, (req, res, next) => {
 
     User.findById(id)
     .then(user => {
-        if (user) {
-            res.json(user);
-        }else {
-            res.status(404).json({ message: `there is no user with id ${id}` })
-        }
+        res.json(user)
     })
     .catch(err => next(err))
 });
