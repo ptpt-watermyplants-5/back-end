@@ -7,7 +7,7 @@ exports.up = function(knex) {
       .notNullable();
       tbl.string('password')
       .notNullable();
-      tbl.integer('phone_number');
+      tbl.bigint('phone_number');
   });
 };
 

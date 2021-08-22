@@ -19,8 +19,8 @@ function findById(id) {
 };
 
 async function addUser(user) {
-    const [id] = await db('users').insert(user);
-    return findById(id);
+    await db('users').insert(user);
+    return findBy(user.username);
 };
 
 async function updateUser(id, user) {
@@ -42,9 +42,9 @@ async function getUserPlants(id) {
 
 async function addPlant(uid, plant) {
     plant.user_id = uid;
-    const [id] = await db('plants').insert(plant);
+    await db('plants').insert(plant);
 
-    return db('plants').where({ "plant_id": id}).first();
+    return getUserPlants(uid);
 };
 
 function removePlant(id) {
