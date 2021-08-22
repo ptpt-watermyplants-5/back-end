@@ -11,12 +11,6 @@
 - [POST] /auth/register
 - [POST] /auth/login
 
-required fields
-{
-    "username": "",
-    "password": "",
-};
-
 ## endpoints for user
 - [GET] /user/:id
 - [GET] /user/:id/plants
