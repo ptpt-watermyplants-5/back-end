@@ -1,6 +1,6 @@
 # back-end
 ### https://ptpt-watermyplants-5.herokuapp.com/
-### user-creds
+### user
 
 {
     username: "jAppleseed",
