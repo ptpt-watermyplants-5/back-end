@@ -3,9 +3,8 @@
 ### user-creds
 
 {
-    user_id: 1,
-    username: 'jAppleseed',
-    password: '1234',
+    username: "jAppleseed",
+    password: "1234",
 }
 
 ## endpoints for login & register
