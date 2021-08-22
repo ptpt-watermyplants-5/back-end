@@ -1,5 +1,13 @@
 # back-end
 ### https://ptpt-watermyplants-5.herokuapp.com/
+### user-creds
+
+{
+    user_id: 1,
+    username: 'jAppleseed',
+    password: '1234',
+}
+
 ## endpoints for login & register
 - [POST] /auth/register
 - [POST] /auth/login
