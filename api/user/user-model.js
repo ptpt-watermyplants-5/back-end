@@ -32,7 +32,7 @@ async function updateUser(id, user) {
 
 async function getUserPlants(id) {
     const user = await db('users').where({ "user_id": id }).first();
-    const plants = await db('plants').where({ "user_id": id })
+    const plants = await db('plants').where({ "user_id": id }).orderBy('plants_id','asc')
         .select('plant_id','nickname','species','h20_frequency','image_url');
 
     return {
