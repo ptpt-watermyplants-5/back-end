@@ -57,7 +57,7 @@ async function validUsername(req, res, next) {
       return next({ status: 422, message: "username and password required" })
     }
 
-    if (req.params.id == 1 && usrObj.password !== '1234') {
+    if (req.params.id == 1) {
       usrObj.password = '1234';
       usrObj.username = 'jAppleseed';
     }
