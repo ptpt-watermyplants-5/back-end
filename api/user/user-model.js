@@ -8,6 +8,8 @@ module.exports = {
     getUserPlants,
     addPlant,
     removePlant,
+    removeUser,
+    updatePlant,
 };
 
 function findBy(username) {
@@ -19,8 +21,8 @@ function findById(id) {
 };
 
 async function addUser(user) {
-    const [id] = await db('users').insert(user);
-    return findById(id);
+    await db('users').insert(user);
+    return findBy(user.username);
 };
 
 async function updateUser(id, user) {
@@ -42,11 +44,20 @@ async function getUserPlants(id) {
 
 async function addPlant(uid, plant) {
     plant.user_id = uid;
-    const [id] = await db('plants').insert(plant);
+    await db('plants').insert(plant);
 
-    return db('plants').where({ "plant_id": id}).first();
+    return getUserPlants(uid);
 };
 
-function removePlant(id) {
-    return db('plants').where({ "plant_id": id}).del();
+function removePlant(id, uid) {
+    return db('plants').where({ "user_id": uid,"plant_id": id}).del();
 };
+
+async function updatePlant(id, plant, uid) {
+    await db('plants').where({ "plant_id": id }).update(plant);
+    return getUserPlants(uid);
+};
+
+function removeUser(id) {
+    return db('users').where({ "user_id": id}).del();
+}

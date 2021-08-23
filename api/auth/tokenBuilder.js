@@ -3,7 +3,7 @@ const { jwtSecret } = require('./secrets');
 
 module.exports = function (user) {
     const payload = {
-        sub: user.id,
+        sub: user.user_id,
         username: user.username,
     }
 
