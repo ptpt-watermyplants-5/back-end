@@ -8,6 +8,8 @@ module.exports = {
     getUserPlants,
     addPlant,
     removePlant,
+    removeUser,
+    updatePlant,
 };
 
 function findBy(username) {
@@ -47,6 +49,15 @@ async function addPlant(uid, plant) {
     return getUserPlants(uid);
 };
 
-function removePlant(id) {
-    return db('plants').where({ "plant_id": id}).del();
+function removePlant(id, uid) {
+    return db('plants').where({ "user_id": uid,"plant_id": id}).del();
 };
+
+async function updatePlant(id, plant, uid) {
+    await db('plants').where({ "plant_id": id }).update(plant);
+    return getUserPlants(uid);
+};
+
+function removeUser(id) {
+    return db('users').where({ "user_id": id}).del();
+}
