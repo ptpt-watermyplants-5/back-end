@@ -59,6 +59,10 @@ router.put('/:id/plants/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
     const { id } = req.params;
+   
+    if (id == 1) {
+        return next({ status: 401, message: "jAppleseed can not be removed" })
+    }
 
     User.removeUser(id)
     .then(resp => {

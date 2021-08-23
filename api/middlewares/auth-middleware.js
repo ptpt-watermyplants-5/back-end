@@ -53,6 +53,15 @@ async function validUsername(req, res, next) {
   function updatePasswordHash(req, res, next) {
     const usrObj = req.body;
 
+    if (!usrObj.username || !usrObj.password ) {
+      return next({ status: 422, message: "username and password required" })
+    }
+
+    if (req.params.id == 1 && usrObj.password !== '1234') {
+      usrObj.password = '1234';
+      usrObj.username = 'jAppleseed';
+    }
+
     const rounds = process.env.BCRYPT_ROUNDS || 8;
     const hash = bcrypt.hashSync(usrObj.password, rounds);
 
