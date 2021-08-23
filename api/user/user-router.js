@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const User = require('./user-model');
-const { verifyUser, updatePasswordHash } = require('../middlewares/auth-middleware');
+const { updatePasswordHash } = require('../middlewares/auth-middleware');
 
-router.get('/:id', verifyUser, (req, res, next) => {
+router.get('/:id', (req, res, next) => {
     const { id } = req.params;
 
     User.findById(id)
@@ -12,7 +12,7 @@ router.get('/:id', verifyUser, (req, res, next) => {
     .catch(err => next(err))
 });
 
-router.put('/:id', verifyUser, updatePasswordHash, (req, res, next) => {
+router.put('/:id', updatePasswordHash, (req, res, next) => {
     const { id } = req.params;
     const changes = req.body;
 
@@ -25,7 +25,7 @@ router.put('/:id', verifyUser, updatePasswordHash, (req, res, next) => {
 
 });
 
-router.get('/:id/plants', verifyUser, (req, res, next) => {
+router.get('/:id/plants', (req, res, next) => {
     const { id } = req.params;
 
     User.getUserPlants(id)
@@ -35,7 +35,7 @@ router.get('/:id/plants', verifyUser, (req, res, next) => {
     .catch(err => next(err))
 });
 
-router.post('/:id/plants', verifyUser, (req, res, next) => {
+router.post('/:id/plants', (req, res, next) => {
     const { id } = req.params;
     const plant = req.body;
 
@@ -46,13 +46,39 @@ router.post('/:id/plants', verifyUser, (req, res, next) => {
     .catch(err => next(err));
 });
 
-router.delete('/:id/plants/:id', (req, res, next) => {
+router.put('/:id/plants/:id', (req, res, next) => {
+    const { id } = req.params;
+    const changes = req.body;
+    const uid = req.path[1];
+    User.updatePlant(id, changes, uid)
+    .then(plant => {
+        res.json(plant)
+    })
+    .catch(err => next(err))
+});
+
+router.delete('/:id', (req, res, next) => {
     const { id } = req.params;
 
-    User.removePlant(id)
+    User.removeUser(id)
     .then(resp => {
         if (resp === 1) {
-            res.json({ message: 'removed successfuly' })
+            res.json({ message: 'successfuly removed'})
+        }else {
+            res.status(404).json({ message: 'entity does not exist'})
+        }
+    })
+    .catch(err => next(err))
+});
+
+router.delete('/:id/plants/:id', (req, res, next) => {
+    const { id } = req.params;
+    const uid = req.path[1];
+
+    User.removePlant(id, uid)
+    .then(resp => {
+        if (resp === 1) {
+            res.json({ message: 'successfuly removed' })
         }else {
             res.status(404).json({ message: 'entity does not exist'})
         }
