@@ -62,13 +62,13 @@ async function validUsername(req, res, next) {
   };
 
   async function verifyUser(req, res, next) {
-    const { username } = req.decodedToken;
-    const { id } = req.params;
+    const { sub } = req.decodedToken;
+    const id = req.path[1];
     const verifiedUser = await User.findById(id);
-
+console.log(req.decodedToken)
     if (Boolean(verifiedUser) === false) {
       return next({ status: 404, message: 'invalid'})
-    }else if (username !== verifiedUser.username) {
+    }else if (sub !== verifiedUser.user_id) {
       return next({ status: 401, message: 'invalid authorization' })
     }
     next();
