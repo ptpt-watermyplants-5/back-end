@@ -13,12 +13,11 @@ module.exports = {
 
 function validRequest(req, res, next) {
     const { username, password } = req.body;
-    const valid = Boolean(username, password);
 
-    if (valid) {
-        next();
+    if (!username || !password) {
+      next({status: 422, message: 'username and password required.'});
     }else {
-        next({status: 422, message: 'username and password required.'});
+      next();
     };
 };
 
