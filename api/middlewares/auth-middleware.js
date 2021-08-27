@@ -60,7 +60,7 @@ async function validUsername(req, res, next) {
     }else if (!usrObj.password) {
       return next({ status: 422, message: "password required" })
     }else if (!usrObj.username) {
-      return next({ status: 422, message: "password required" })
+      return next({ status: 422, message: "username required" })
     }
 
     if (req.params.id == 1) {
