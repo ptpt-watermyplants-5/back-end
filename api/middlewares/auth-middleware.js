@@ -49,11 +49,18 @@ async function validUsername(req, res, next) {
     });
   };
 
-  function updatePasswordHash(req, res, next) {
+  async function updatePasswordHash(req, res, next) {
+    const { id } = req.params;
     const usrObj = req.body;
 
-    if (!usrObj.username || !usrObj.password ) {
+    const user =  await User.findById(id);
+
+    if (!usrObj.username && !usrObj.password ) {
       return next({ status: 422, message: "username and password required" })
+    }else if (!usrObj.password) {
+      return next({ status: 422, message: "password required" })
+    }else if (!usrObj.username) {
+      return next({ status: 422, message: "password required" })
     }
 
     if (req.params.id == 1) {
@@ -61,12 +68,38 @@ async function validUsername(req, res, next) {
       usrObj.username = 'jAppleseed';
     }
 
-    const rounds = process.env.BCRYPT_ROUNDS || 8;
-    const hash = bcrypt.hashSync(usrObj.password, rounds);
+    if(req.body.password2.length > 0) {
+      if (bcrypt.compareSync(usrObj.password, user.password)) {
+        const rounds = process.env.BCRYPT_ROUNDS || 8;
+        const hash = bcrypt.hashSync(usrObj.password2, rounds);
+    
+        usrObj.password2 = hash;
 
-    usrObj.password = hash;
-    req.body = usrObj;
-    next();
+        req.body = {
+          username: usrObj.username,
+          password: usrObj.password2,
+          phone_number: usrObj.phone_number,
+        };
+        next();
+      }else {
+        return next({ status: 401, message: 'password does not match existing' })
+      }
+    }else {
+      if (bcrypt.compareSync(usrObj.password, user.password)) {
+        const rounds = process.env.BCRYPT_ROUNDS || 8;
+      const hash = bcrypt.hashSync(usrObj.password, rounds);
+  
+      usrObj.password = hash;
+      req.body = {
+        username: usrObj.username,
+        password: usrObj.password,
+        phone_number: usrObj.phone_number,
+      };
+      next();
+      }else {
+        return next({ status: 401, message: 'password does not match existing' })
+      }
+    }
   };
 
   async function verifyUser(req, res, next) {
