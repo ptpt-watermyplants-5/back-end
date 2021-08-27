@@ -64,7 +64,7 @@ async function validUsername(req, res, next) {
     }
 
     if (req.params.id == 1) {
-      usrObj.password = '12345';
+      usrObj.password = '1234';
       usrObj.password2 = '1234';
       usrObj.username = 'jAppleseed';
     }
