@@ -54,6 +54,7 @@ async function validUsername(req, res, next) {
     const usrObj = req.body;
 
     const user =  await User.findById(id);
+    const usernameIsValid =  await User.findBy(usrObj.username);
 
     if (!usrObj.username && !usrObj.password ) {
       return next({ status: 422, message: "username and password required" })
@@ -63,7 +64,12 @@ async function validUsername(req, res, next) {
       return next({ status: 422, message: "username required" })
     }
 
-    if (req.params.id == 1) {
+    if (usernameIsValid && user.user_id !== usernameIsValid.user_id) {
+      return next({ status: 422, message: "username taken" });
+    }
+
+
+    if (id == 1) {
       usrObj.password = '1234';
       usrObj.password2 = '1234';
       usrObj.username = 'jAppleseed';

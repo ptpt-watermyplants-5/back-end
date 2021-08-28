@@ -12,7 +12,7 @@ router.get('/:id', (req, res, next) => {
     .catch(err => next(err))
 });
 
-router.put('/:id', validUsername, updatePasswordHash, (req, res, next) => {
+router.put('/:id', updatePasswordHash, (req, res, next) => {
     const { id } = req.params;
     const changes = req.body;
 
