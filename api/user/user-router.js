@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('./user-model');
-const { updatePasswordHash } = require('../middlewares/auth-middleware');
+const { updatePasswordHash, validUsername } = require('../middlewares/auth-middleware');
 
 router.get('/:id', (req, res, next) => {
     const { id } = req.params;
@@ -12,7 +12,7 @@ router.get('/:id', (req, res, next) => {
     .catch(err => next(err))
 });
 
-router.put('/:id', updatePasswordHash, (req, res, next) => {
+router.put('/:id', validUsername, updatePasswordHash, (req, res, next) => {
     const { id } = req.params;
     const changes = req.body;
 
